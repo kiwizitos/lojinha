@@ -5,7 +5,7 @@ import 'package:lojinha/widgets/product_grid_item.dart';
 import 'package:provider/provider.dart';
 
 class ProductGrid extends StatelessWidget {
-  const ProductGrid({super.key, required this.showFavoriteOnly});
+  const ProductGrid(this.showFavoriteOnly, {super.key});
 
   final bool showFavoriteOnly;
 
@@ -14,6 +14,7 @@ class ProductGrid extends StatelessWidget {
     final provider = Provider.of<ProductsList>(context);
     final List<Product> loadedProducts =
         showFavoriteOnly ? provider.favoriteItems : provider.items;
+
     return GridView.builder(
       padding: const EdgeInsets.all(10),
       itemCount: loadedProducts.length,

@@ -32,36 +32,38 @@ class _OrderWidgetState extends State<OrderWidget> {
               icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
             ),
           ),
-          _expanded ? Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 15,
-              vertical: 4,
-            ),
-            height: (widget.order.products.length * 25) + 10,
-            child: ListView(
-              children: widget.order.products.map((product) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      product.name,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      '${product.quantity}x R\$${product.price}',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                );
-              }).toList(),
-            ),
-          ) : Container()
+          _expanded
+              ? Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 4,
+                  ),
+                  height: (widget.order.products.length * 25) + 10,
+                  child: ListView(
+                    children: widget.order.products.map((product) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            product.name,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '${product.quantity}x R\$${product.price}',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+                )
+              : Container()
         ],
       ),
     );
