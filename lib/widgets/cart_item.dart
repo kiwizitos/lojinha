@@ -31,7 +31,8 @@ class CartItemWidget extends StatelessWidget {
           context: context,
           builder: (context) => AlertDialog(
             title: const Text('Tem Certeza?'),
-            content: const Text('O seguinte item será removido do seu carrinho'),
+            content:
+                const Text('O seguinte item será removido do seu carrinho'),
             actions: [
               TextButton(
                 child: const Text('Não'),

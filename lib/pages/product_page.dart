@@ -8,9 +8,12 @@ import 'package:provider/provider.dart';
 class ProductPage extends StatelessWidget {
   const ProductPage({Key? key}) : super(key: key);
 
+  Future<void> _refreshProducts(BuildContext context) {
+    return Provider.of<ProductsList>(context, listen: false).loadProducts();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final ProductsList products = Provider.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Meus produtos'),
@@ -25,12 +28,17 @@ class ProductPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(8),
-        child: ListView.builder(
-          itemCount: products.itemsCount,
-          itemBuilder: (context, i) => Column(
-            children: [ProductItem(products.items[i]), Divider()],
+      body: Consumer<ProductsList>(
+        builder: (context, products, _) => RefreshIndicator(
+          onRefresh: () => _refreshProducts(context),
+          child: Padding(
+            padding: EdgeInsets.all(8),
+            child: ListView.builder(
+              itemCount: products.itemsCount,
+              itemBuilder: (context, i) => Column(
+                children: [ProductItem(products.items[i]), Divider()],
+              ),
+            ),
           ),
         ),
       ),
