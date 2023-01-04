@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lojinha/models/product.dart';
+import 'package:lojinha/providers/auth.dart';
 import 'package:lojinha/providers/cart.dart';
 import 'package:lojinha/utils/routes.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ class ProductGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final auth = Provider.of<Auth>(context, listen: false);
     return Consumer<Product>(
       builder: (context, product, _) => ClipRRect(
         borderRadius: BorderRadius.circular(10),
@@ -25,7 +27,10 @@ class ProductGridItem extends StatelessWidget {
                     ? Icons.favorite
                     : Icons.favorite_border),
                 onPressed: () {
-                  product.toggleFavorite();
+                  product.toggleFavorite(
+                    auth.token ?? '',
+                    auth.userId ?? '',
+                  );
                 },
                 color: product.isFavorite ? Colors.red : Colors.white,
               ),

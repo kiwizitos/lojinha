@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lojinha/pages/auth_or_home_page.dart';
 import 'package:lojinha/pages/cart_page.dart';
 import 'package:lojinha/pages/orders_page.dart';
 import 'package:lojinha/pages/product_detail_page.dart';
 import 'package:lojinha/pages/product_form_page.dart';
 import 'package:lojinha/pages/product_page.dart';
-import 'package:lojinha/pages/products_overview_page.dart';
+import 'package:lojinha/providers/auth.dart';
 import 'package:lojinha/providers/cart.dart';
 import 'package:lojinha/providers/order_list.dart';
 import 'package:lojinha/providers/products_list.dart';
@@ -29,13 +30,30 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: (_) => Auth(),
+        ),
+        ChangeNotifierProxyProvider<Auth, ProductsList>(
           create: (_) => ProductsList(),
+          update: (context, auth, previous) {
+            return ProductsList(
+              auth.token ?? '',
+              auth.userId ?? '',
+              previous?.items ?? [],
+            );
+          },
+        ),
+        ChangeNotifierProxyProvider<Auth, OrderList>(
+          create: (_) => OrderList(),
+          update: (context, auth, previous) {
+            return OrderList(
+              auth.token ?? '',
+              auth.userId ?? '',
+              previous?.items ?? [],
+            );
+          },
         ),
         ChangeNotifierProvider(
           create: (_) => Cart(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => OrderList(),
         ),
       ],
       child: MaterialApp(
@@ -43,12 +61,12 @@ class MyApp extends StatelessWidget {
         theme: tema.copyWith(
           colorScheme: tema.colorScheme.copyWith(
             primary: Colors.purple,
-            secondary: Colors.red,
+            secondary: Colors.orange,
           ),
         ),
         // home: ProductsOverviewPage(),
         routes: {
-          Routes.HOME: (context) => const ProductsOverviewPage(),
+          Routes.AUTH_OR_HOME: (context) => const AuthOrHomePage(),
           Routes.PRODUCT_DETAIL: (context) => const ProductDetailPage(),
           Routes.CART: (context) => const CartPage(),
           Routes.ORDERS: (context) => const OrdersPage(),

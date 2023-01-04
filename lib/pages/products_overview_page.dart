@@ -8,8 +8,8 @@ import 'package:lojinha/widgets/product_grid.dart';
 import 'package:provider/provider.dart';
 
 enum FilterOptions {
-  Favorite,
-  All,
+  favorite,
+  all,
 }
 
 class ProductsOverviewPage extends StatefulWidget {
@@ -26,7 +26,6 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   @override
   void initState() {
     super.initState();
-
     Provider.of<ProductsList>(
       context,
       listen: false,
@@ -44,16 +43,16 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
             itemBuilder: (_) => [
               const PopupMenuItem(
                 child: Text('Favoritados'),
-                value: FilterOptions.Favorite,
+                value: FilterOptions.favorite,
               ),
               const PopupMenuItem(
                 child: Text('Todos'),
-                value: FilterOptions.All,
+                value: FilterOptions.all,
               ),
             ],
             onSelected: (FilterOptions selectedValue) {
               setState(() {
-                if (selectedValue == FilterOptions.Favorite) {
+                if (selectedValue == FilterOptions.favorite) {
                   _showFavoriteOnly = true;
                 } else {
                   _showFavoriteOnly = false;
